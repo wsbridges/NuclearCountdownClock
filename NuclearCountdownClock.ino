@@ -54,6 +54,8 @@ unsigned long lastPlusHigh = 0;
 //the Minus button was read as pressed
 unsigned long lastMinusHigh = 0;
 
+bool lastCountdownHigh = false;
+
 void setup() {
   //For debugging
   Serial.begin(57600);
@@ -134,9 +136,21 @@ void readCountdownSwitch() {
   if(digitalRead(COUNTDOWN_SWITCH) == HIGH) {
     //Serial.println("Countdown Switch"); //debug message
     countdownMode = true;
+    
+    //exit setup if we switch in or out of countdown mode
+    if(!lastCountdownHigh && setupMode) {
+      setupMode = false;
+    }
+    lastCountdownHigh = true;
   }
   else {
     countdownMode = false;
+
+    //exit setup if we switch in or out of countdown mode
+    if(lastCountdownHigh && setupMode) {
+      setupMode = false;
+    }
+    lastCountdownHigh = false;
   }
 }
 
