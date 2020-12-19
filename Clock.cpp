@@ -136,7 +136,7 @@ void Clock::setCountdownTime(char* displayBuff, bool plus, bool minus) {
         bool pm = false;
         if(twelveHour >= 12) {
           pm = true;
-          if(twelveHour > 13) {
+          if(twelveHour >= 13) {
             twelveHour -= 12;
           }
         }
@@ -308,7 +308,7 @@ void Clock::setTime(char* displayBuff, bool plus, bool minus) {
         bool pm = false;
         if(twelveHour >= 12) {
           pm = true;
-          if(twelveHour > 13) {
+          if(twelveHour >= 13) {
             twelveHour -= 12;
           }
         }
@@ -421,7 +421,7 @@ uint8_t Clock::determineMaxDayOfMonth(uint8_t month, uint16_t year) {
   }
 }
 
-void Clock::getCountdownTime(char* displayBuff) {
+bool Clock::getCountdownTime(char* displayBuff) {
   DateTime curTime = rtc.now();
   if(retireDate.unixtime() > curTime.unixtime()){
     //subtract seconds
@@ -539,15 +539,13 @@ void Clock::getCountdownTime(char* displayBuff) {
     Serial.println();
     
     sprintf(displayBuff, "%02d    %02d%02d %02d %02d", monDiff, dayDiff, hourDiff, minDiff, secDiff);
+    return false;
   }
 
   else {
-    sprintf(displayBuff, "CONGRATS  JOHN  ");
+    //sprintf(displayBuff, "CONGRATS  JOHN  ");
+    return true;
   }
-}
-
-void Clock::displayCongratsAnimation(char* displayBuff) {
-  
 }
 
 void Clock::getCurrentTime(char* displayBuff) {

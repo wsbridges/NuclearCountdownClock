@@ -114,8 +114,14 @@ void readSecretCode() {
   if(digitalRead(MINUS_BUTTON) == HIGH && digitalRead(PLUS_BUTTON) == HIGH && digitalRead(SETUP_BUTTON) == HIGH) {
     display->write("  BILL    RULES ");
     delay(3000);
-    display->write("FAV SON- IN-LAW ");
-    delay(3000);
+
+    //Blink FAV SON-IN-LAW 6 times
+    for(int i = 0; i < 6; i++) {
+      display->write("                ");
+      delay(250);
+      display->write("FAV SON- IN-LAW ");
+      delay(250);
+    }
   }
 }
 
@@ -230,8 +236,13 @@ void displayCountdown() {
   //the clock will get bogged down and time will not be accurate
   if(currMillis - lastClockPoll >= CLOCK_INTERVAL) {
     char displayBuff[16]; //Stores text to display
-    clock->getCountdownTime(displayBuff); //Get countdown time to display
-    display->write(displayBuff); //Display countdown time
+    bool countdownPassed = clock->getCountdownTime(displayBuff); //Get countdown time to display
+    if(countdownPassed) {
+      display->displayCongratsAnimation();
+    }
+    else {
+      display->write(displayBuff); //Display countdown time
+    }
     lastClockPoll = currMillis; //Save when we polled the clock
   }
 }

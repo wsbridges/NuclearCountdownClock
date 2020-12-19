@@ -15,11 +15,10 @@ class Clock {
     void setTime(char* displayBuff, bool plus, bool minus);
     void setCountdownTime(char* displayBuff, bool plus, bool minus);
     void changeBrightness(char* displayBuff, bool plus, bool minus);
-    void displayCongratsAnimation(char* displayBuff);
   public:
     Clock();
     bool initialized();
-    void getCountdownTime(char* displayBuff);
+    bool getCountdownTime(char* displayBuff);
     void getCurrentTime(char* displayBuff);
     void nextMenuItem(bool countdownMode);
     void resetMenu();

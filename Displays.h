@@ -10,10 +10,15 @@ class Displays {
     Display* disp2;
     Display* disp3;
     Display* disp4;
+  protected: 
+    void clearScreen();
+    void spinningAnimation();
   public:
     Displays();
     ~Displays();
     void write(const char str[]);
+    void writeRaw(uint8_t disp, uint8_t pos, uint16_t bitmask);
+    void displayCongratsAnimation();
     void blink();
     void stopBlink();
     void blinkBottomRow();
