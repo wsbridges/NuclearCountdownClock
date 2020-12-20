@@ -4,17 +4,22 @@
 #include "RTClib.h"
 
 class Clock {
+  
   private:
     RTC_DS3231 rtc;
     DateTime retireDate;
     uint8_t setupMenuCounter;
     bool militaryTime;
     bool error;
+  
   protected:
     uint8_t determineMaxDayOfMonth(uint8_t month, uint16_t year);
-    void setTime(char* displayBuff, bool plus, bool minus);
+    DateTime setupMenu(char* displayBuff, DateTime date, bool plus, bool minus);
     void setCountdownTime(char* displayBuff, bool plus, bool minus);
     void changeBrightness(char* displayBuff, bool plus, bool minus);
+    void adjustCountdownTime(char* displayBuff, bool plus, bool minus);
+    void adjustTime(char* displayBuff, bool plus, bool minus);
+  
   public:
     Clock();
     bool initialized();
@@ -30,6 +35,7 @@ class Clock {
     void showCountdownSetup(char* displayBuff);
 
     static const char* MONTH_NAME[];
+    
 };
 
 #endif

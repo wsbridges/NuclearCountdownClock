@@ -11,8 +11,6 @@ class Display {
     ~Display();
     void write(const char str[]);
     void writeRaw(uint8_t pos, uint16_t bitmask);
-    void blink();
-    void stopBlink();
     void setBrightness(uint8_t b);
 };
 

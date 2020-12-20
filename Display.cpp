@@ -5,20 +5,28 @@ Display::Display(uint8_t addr) {
 }
 
 Display::~Display() {
-  //No memory allocated. Do nothing.
+  //No dynamic memory allocated. Do nothing.
 }
 
 void Display::write(const char str[]) {
+  //Send characters to display
   for(uint8_t i = 0; i < 4; i++) {
     //The default '5' looks weird. Using the same as 
     //'S' because it looks like what I want it to.
     if(str[i] == '5') {
       disp.writeDigitAscii(i, 'S');
     }
+    //I don't like the look of the 3 either
+    else if(str[i] == '3') {
+      disp.writeDigitRaw(i, 0b0000000011001111);
+    }
     else {
       disp.writeDigitAscii(i, str[i]);
     }
   }
+
+  //This tells the display to show the characters
+  //that were just sent
   disp.writeDisplay();
 }
 
@@ -48,14 +56,7 @@ void Display::writeRaw(uint8_t pos, uint16_t bitmask) {
   disp.writeDisplay();
 }
 
-void Display::blink() {
-  disp.blinkRate(HT16K33_BLINK_2HZ);
-}
-
-void Display::stopBlink() {
-  disp.blinkRate(HT16K33_BLINK_DISPLAYON);
-}
-
+//Changes brightness
 void Display::setBrightness(uint8_t b) {
   disp.setBrightness(b);
 }

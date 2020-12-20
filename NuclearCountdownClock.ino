@@ -54,6 +54,8 @@ unsigned long lastPlusHigh = 0;
 //the Minus button was read as pressed
 unsigned long lastMinusHigh = 0;
 
+//Stores the state of the last read of the countdown
+//switch. 
 bool lastCountdownHigh = false;
 
 void setup() {
@@ -114,10 +116,11 @@ void loop() {
 //get a super cool message
 void readSecretCode() {
   if(digitalRead(MINUS_BUTTON) == HIGH && digitalRead(PLUS_BUTTON) == HIGH && digitalRead(SETUP_BUTTON) == HIGH) {
+    //First display the fact that Bill does in fact rule
     display->write("  BILL    RULES ");
-    delay(3000);
+    delay(3000); //Allow 3 seconds for this fact to sink in
 
-    //Blink FAV SON-IN-LAW 6 times
+    //Then blink FAV SON-IN-LAW 6 times for emphasis
     for(int i = 0; i < 6; i++) {
       display->write("                ");
       delay(250);
@@ -131,7 +134,8 @@ void readSecretCode() {
 //NOTE: this may still read LOW even if the Launch Switch
 //      is up if the Initiate key is not engaged. This is
 //      because the Initiate key provides voltage to the
-//      Launch Switch
+//      Launch Switch. Both have to be engaged (in any
+//      order) in order to enter Countdown Mode.
 void readCountdownSwitch() {
   if(digitalRead(COUNTDOWN_SWITCH) == HIGH) {
     //Serial.println("Countdown Switch"); //debug message
